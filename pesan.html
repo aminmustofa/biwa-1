@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Halaman Penyemangat untuk Pasangan">
+    <meta name="keywords" content="semangat, pasangan, cinta, motivasi, penyemangat">
+    <meta name="author" content="Amin Mustofa">
+    <title>So Proud Of you</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Body Styling */
+        body {
+            background-size: cover;
+            background-position: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            margin: 0;
+            transition: background-image 0.5s ease-in-out; /* Transisi smooth untuk background */
+        }
+
+        /* Message Section */
+        .message-section {
+            padding: 60px 0;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            margin-top: 20vh;
+        }
+
+        .message-section h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .message-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+        }
+
+        .message-card p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Tombol Styling */
+        .btn-custom {
+            background-color: #ff6f61;
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            border-radius: 25px;
+            text-transform: uppercase;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #e55a4d;
+        }
+
+        /* Audio Section */
+        .audio-section {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 30px;
+            text-align: center;
+            position: relative;
+            margin-top: 50px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        .audio-section h3 {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .audio-section audio {
+            width: 100%;
+            border-radius: 10px;
+            border: none;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 767px) {
+            .message-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .message-card {
+                max-width: 90%;
+            }
+
+            .btn-custom {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Message Section -->
+    <section class="message-section">
+        <div class="container">
+            <h2 id="greeting"></h2>
+            <p id="timeDisplay"></p> <!-- Menampilkan waktu saat ini -->
+            
+            <!-- Tempat untuk menampilkan pesan -->
+            <div class="message-card" id="messageDisplay">
+                <p>Pesan akan muncul setelah Anda klik tombol di bawah.</p>
+            </div>
+
+            <!-- Tombol untuk menampilkan pesan acak -->
+            <button id="nextMessageBtn" class="btn btn-custom" onclick="showRandomMessage()">klik Me!!</button>
+        </div>
+    </section>
+
+    <!-- Audio Section -->
+    <section id="audio" class="audio-section">
+        <div class="container">
+            <h3>For fav Person ❤️</h3>
+            <audio id="audioPlayer" controls autoplay loop>
+                <source src="assets/audio/lagu.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <p><em>Tekan tombol play untuk mendengarkan lagu.</em></p>
+        </div>
+    </section>
+
+    <!-- Link ke JS Bootstrap dan Script untuk Pesan -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        // Array gambar background yang berbeda
+        const backgrounds = [
+            'url("assets/img/1.jpg")',
+            'url("assets/img/2.jpg")',
+            'url("assets/img/3.jpg")',
+            'url("assets/img/4.jpg")'
+        ];
+
+        // Ambil nama dari localStorage
+        const userName = localStorage.getItem('userName');
+
+        // Tampilkan sapaan sesuai waktu
+        function displayGreeting() {
+            const date = new Date();
+            const hours = date.getHours();
+            let greeting = '';
+
+            if (hours < 12) {
+                greeting = `Selamat Pagi, ${userName || 'Sayang'}`;
+            } else if (hours < 18) {
+                greeting = `Selamat Sore, ${userName || 'Sayang'}`;
+            } else {
+                greeting = `Selamat Malam, ${userName || 'Sayang'}`;
+            }
+
+            document.getElementById('greeting').textContent = greeting;
+
+            // Menampilkan jam saat ini
+            const hoursFormatted = String(hours).padStart(2, '0');
+            const minutesFormatted = String(date.getMinutes()).padStart(2, '0');
+            const secondsFormatted = String(date.getSeconds()).padStart(2, '0');
+            const currentTime = `${hoursFormatted}:${minutesFormatted}:${secondsFormatted}`;
+            document.getElementById('timeDisplay').textContent = `Waktu sekarang: ${currentTime}`;
+        }
+
+        // Array untuk menyimpan pesan dari JSON
+        let messages = []; 
+        let displayedMessages = [];  // Array untuk menyimpan pesan yang sudah ditampilkan
+
+        // Fungsi untuk mengambil pesan dari file JSON
+        function fetchMessages() {
+            fetch('config/messages.json')
+                .then(response => response.json())
+                .then(data => {
+                    messages = data.messages;
+                    showRandomMessage();  // Menampilkan pesan pertama kali
+                })
+                .catch(error => {
+                    console.error('Error fetching messages:', error);
+                    alert('Gagal mengambil data pesan.');
+                });
+        }
+
+        // Fungsi untuk menampilkan pesan acak yang belum ditampilkan
+        function showRandomMessage() {
+            if (messages.length === 0) {
+                alert("Pesan belum dimuat, coba lagi nanti.");
+                return;
+            }
+
+            let randomMessage;
+
+            // Cek apakah semua pesan telah ditampilkan
+            if (displayedMessages.length === messages.length) {
+                // Reset displayedMessages jika semua pesan sudah ditampilkan
+                displayedMessages = [];
+            }
+
+            // Pilih pesan acak yang belum ditampilkan
+            do {
+                randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            } while (displayedMessages.includes(randomMessage));  // Pastikan pesan belum ditampilkan
+
+            // Tampilkan pesan pada elemen dengan id 'messageDisplay'
+            const messageDisplay = document.getElementById('messageDisplay');
+            messageDisplay.innerHTML = `<p>${randomMessage}</p>`;
+
+            // Tambahkan pesan yang ditampilkan ke array displayedMessages
+            displayedMessages.push(randomMessage);
+
+            // Pilih background acak dari array
+            const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+            document.body.style.backgroundImage = randomBackground;  // Ubah latar belakang
+        }
+
+        window.onload = () => {
+            displayGreeting();  // Menampilkan sapaan
+            fetchMessages();    // Mengambil pesan dari file JSON
+        }
+
+
+    </script>
+
+</body>
+
+</html>

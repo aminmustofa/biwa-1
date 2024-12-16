@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Halaman Penyemangat untuk Pasangan">
+    <meta name="keywords" content="semangat, pasangan, cinta, motivasi, penyemangat">
+    <meta name="author" content="Amin Mustofa">
+    <title>Keep Moving On</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Styling Umum */
+        body {
+            background-color: #f4f8fb; /* Warna latar belakang lembut */
+            background-image: url('assets/img/0.jpg');  /* Menambahkan gambar latar belakang */
+            background-size: cover;  /* Agar gambar memenuhi layar */
+            background-position: center;  /* Memposisikan gambar di tengah */
+            background-attachment: fixed; /* Membuat gambar latar belakang tetap saat scroll */
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        /* Container utama dengan efek shadow */
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Transparansi putih untuk efek latar belakang */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* Judul dan deskripsi */
+        h2 {
+            font-size: 2rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        /* Input field dengan desain lebih halus */
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #ff6f61;
+            outline: none;
+        }
+
+        /* Tombol yang lebih menarik */
+        button {
+            background-color: #ff6f61;
+            color: white;
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e55a4d;
+        }
+
+        /* Responsif untuk perangkat kecil */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                max-width: 90%;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            button {
+                font-size: 1rem;
+                padding: 10px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Masukkan Nama Kamu</h2>
+        <p>Your name?</p>
+        <input type="text" id="nameInput" placeholder="Masukkan Nama Kamu" required>
+        <br>
+        <button onclick="saveName()">Mulai</button>
+    </div>
+
+    <script>
+        function saveName() {
+            const name = document.getElementById('nameInput').value;
+            if (name) {
+                localStorage.setItem('userName', name);  // Simpan nama di localStorage
+                window.location.href = 'pesan.html';  // Arahkan ke halaman pesan.html
+            } else {
+                alert('Mohon masukkan nama terlebih dahulu!');
+            }
+        }
+    </script>
+
+</body>
+
+</html>
